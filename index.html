@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tonal/2.2.2/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.38/Tone.js"></script>
+
+  <style>
+    
+    * { margin:0; padding: 0;}
+
+    </style>
+  
+</head>
+
+<body>
+
+<script>
+
+  let ready = false; 
+  let osc;  ///this will be our first oscillator
+  
+  function setup() {
+    
+  createCanvas(windowWidth, windowHeight);
+    
+    osc = new Tone.Oscillator ({
+type: "sine", 
+      frequency: 440,
+      volume: -3
+      
+    });
+
+    osc.toDestination() ;
+
+    wave = new Tone.Waveform();
+    Tone.Master.connect(wave);
+    
+    Tone.Master.volume.value = -9;
+    
+  
+  }
+
+  function draw() {
+  background(0,0,0,);
+  
+
+  if (ready) {
+    text ("");
+
+    // create a visualization 
+
+    let buffer = wave.getValue("");
+            stroke(255);
+    line (0, mouseX, width, mouseX);
+
+    //console.log(buffer);
+    
+    // control the audio
+
+    osc.frequency.value = mouseX;
+//fill (1,0,0);
+
+
+
+     } else {
+    fill (255);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    text ("This is Nicolas' button", width / 2, height / 2);
+     }
+  }
+
+
+  function windowResized(){
+
+    
+  }
+
+    function mousePressed() { 
+
+      if (!ready) {
+       
+        ready = true;
+        osc.start();
+      }
+else {
+  ready = false;
+  osc.stop();
+}
+
+console.log(ready);
+
+      
+    }
+  
+    </script>
+
+  <script src="script.js"></script>
+
+  <!--
+This script places a badge on your repl's full-browser view back to your repl's cover page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green, teal, blue, blurple, magenta, pink!
+-->
+  <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
+</body>
+
+</html>
